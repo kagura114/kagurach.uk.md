@@ -45,29 +45,29 @@ service singboxtunnel start
 ## 示例配置
 ```json
 {
-    "log": {
-        "disabled": false,
-        "level": "info",
-        "output": "box.log",
-        "timestamp": true
-    },
-    "dns": {},
-    "ntp": {},
-    "inbounds": [
-        {
-            "type": "shadowsocks",
-            "listen": "::",
-            "listen_port": 11451,
-            "network": "tcp",
-            "method": "aes-128-gcm",
-            "password": "你不填就别想用",
-            "multiplex": {
-              "enabled": true
-            }
+  "log": {
+      "disabled": false,
+      "level": "info",
+      "output": "/root/box.log",
+      "timestamp": true
+  },
+  "dns": {},
+  "ntp": {},
+  "inbounds": [
+      {
+          "type": "shadowsocks",
+          "listen": "::",
+          "listen_port": 11451,
+          "network": "tcp",
+          "method": "aes-128-gcm",
+          "password": "你不填就别想用",
+          "multiplex": {
+            "enabled": true
           }
-    ],
-    "outbounds": [],
-    "route": {},
-    "experimental": {}
-  }
+        }
+  ],
+  "outbounds": [],
+  "route": {},
+  "experimental": {}
+}
 ```
