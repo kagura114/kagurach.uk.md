@@ -10,13 +10,13 @@ apk add vim
 ```
 
 ## 设置自启
-编辑这个文件：`vim /etc/init.d/singboxtunnel`
+编辑这个文件：`vim /etc/init.d/singbox`
 ```bash
 #!/sbin/openrc-run
 
 command="/usr/bin/sing-box"
 command_args="run -c /root/config.json" #是您的配置文件位置
-description="SingboxTunnel service"
+description="singbox service"
 
 depend() {
   need net
@@ -24,22 +24,22 @@ depend() {
 }
 
 start() {
-  ebegin "Starting SingboxTunnel"
+  ebegin "Starting singbox"
   start-stop-daemon --start --background --exec $command -- $command_args
   eend $?
 }
 
 stop() {
-  ebegin "Stopping SingboxTunnel"
+  ebegin "Stopping singbox"
   start-stop-daemon --stop --exec $command
   eend $?
 }
 ```
 然后加入OpenRC自启动  
 ```bash
-chmod +x /etc/init.d/singboxtunnel
-rc-update add singboxtunnel default
-service singboxtunnel start
+chmod +x /etc/init.d/singbox
+rc-update add singbox default
+service singbox start
 ```
 
 ## 示例配置
@@ -71,3 +71,8 @@ service singboxtunnel start
   "experimental": {}
 }
 ```
+
+---
+若需要查看更多sing-box配置，请参见
+- [singbox docs](https://sing-box.sagernet.org/)
+- [另一篇简单配置singbox的文章](https://kagurach.uk/archives/221)
