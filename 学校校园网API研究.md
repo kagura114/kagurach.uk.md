@@ -12,7 +12,18 @@
  其中cmcc是移动，njxy是电信，空是校园网缴费的
 
 ### Code
-#### 全功能，自动登陆本机，客观上改变myip为任何值则为登陆此ip
+可以直接填好下面的链接浏览器打开， `${myip}` 为空时可以登陆本机
+`https://p.njupt.edu.cn:802/eportal/portal/login?callback=dr1003&login_method=1&user_account=%2C0%2C'${identity}'%40'${operator}'&user_password='${password}'&wlan_user_ip='${myip}'&wlan_user_ipv6=&wlan_user_mac=000000000000&wlan_ac`
+#### 最简单版本Bash脚本
+```bash
+#!/bin/bash
+identity=''
+operator=''
+password=''
+curl -k -s 'https://p.njupt.edu.cn:802/eportal/portal/login?callback=dr1003&login_method=1&user_account=%2C0%2C'${identity}'%40'${operator}'&user_password='${password}'&wlan_user_ip='`curl -k -s "https://10.10.244.11/a79.htm" | sed -nE 's/.*ss5="([0-9\.]*?)".*/\1/p'`'&wlan_user_ipv6=&wlan_user_mac=000000000000&wlan_ac'
+```
+
+#### 全功能，自动登陆本机，客观上改变myip为任何值则为登陆您输入的ip
 ```bash
 #!/bin/bash
 myip=$(curl -k -s "https://10.10.244.11/a79.htm" | sed -nE 's/.*ss5="([0-9\.]*?)".*/\1/p') #nullable if you cannot obtain your ip
@@ -32,7 +43,6 @@ else
   echo "$result"
 fi
 }
-
 
 function login_dbg() {
   echo your ip: $myip
@@ -111,10 +121,6 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
 
 login
 ```
-#### 最简单版本，浏览器打开就可以
-```bash
-https://p.njupt.edu.cn:802/eportal/portal/login?callback=dr1003&login_method=1&user_account=%2C0%2C'${identity}'%40'${operator}'&user_password='${password}'&wlan_user_ip='${myip}'&wlan_user_ipv6=&wlan_user_mac=000000000000&wlan_ac
-```
 
 ### 注解
 如果上面的ip获取不正常，你可以尝试空ip，或者手动抠出来
@@ -132,6 +138,9 @@ eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 eth0就是你的网卡名称，awk后面由 / / 包住的部分就应该是inet，就是IP地址前面的那些内容，很明显这里是第三个部分所以是$3，当然你也可以直接试出来
+
+### 一个小问题
+如果一直报密码错而且您的密码里有特殊字符的话（尤其是 `+` ），请手动将 `'${password}'` 替换为 URL Encode 后的密码字符串（可以直接抓包手动登陆时的URL）。
 
 ## 2. 发送一条短信验证码
 ### Code
@@ -171,6 +180,8 @@ util._jsonp({
 |变量名称|解释|例子|
 |-------|---|----|
 |target_ip|目标ip，10进制格式|175256324|
+
+例如这里是我随便找的转换网站：https://www.browserling.com/tools/ip-to-dec
 ### Code
 ```bash
 target_ip = ''
