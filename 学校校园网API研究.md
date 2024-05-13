@@ -187,8 +187,7 @@ dr1002({"result":1,"msg":"获取用户在线信息成功！","list":[{"online_se
 
 ### Code
 ```bash
-curl "https://p.njupt.edu.cn:802/eportal/portal/logout?callback=dr1003&login_method=1&user_account=drcom&user_password=123&ac_logout=1&register_mode=1&wlan_user_ip='${target_ip}'&wlan_user_ipv6=&wlan_vlan_id=0&wlan_user_mac=000000000000&wlan_ac_ip=&wlan_ac_name=&jsVersion=4.1.3&v=6215&lang=zh
-"
+curl "https://p.njupt.edu.cn:802/eportal/portal/logout?callback=dr1003&login_method=1&user_account=drcom&user_password=123&ac_logout=1&register_mode=1&wlan_user_ip='${target_ip}'&wlan_user_ipv6=&wlan_vlan_id=0&wlan_user_mac=000000000000&wlan_ac_ip=&wlan_ac_name=&jsVersion=4.1.3&v=6215&lang=zh"
 ```
 
 callback:\
